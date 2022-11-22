@@ -8,14 +8,39 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var vm = ViewModel()
     var body: some View {
+        
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Toggle("Toggle Switch", isOn: $vm.isTurnedOn)
+                .padding()
+            
+            HStack {
+                Button("Increment") {
+                    vm.increment()
+                }
+                Text("\(vm.counter)")
+                    .bold()
+                    .foregroundColor(.gray)
+                    .padding()
+                
+            }
+            List(vm.itemList) { item in
+                HStack {
+                    Text(item.name)
+                    Spacer()
+                    Text(item.description)
+                }
+            }
+            .listStyle(.plain)
+            .background(.thinMaterial)
+            
+            Button("Add Item") {
+                vm.addItem()
+            }
+            .padding()
         }
-        .padding()
+        
     }
 }
 
